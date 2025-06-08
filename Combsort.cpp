@@ -1,84 +1,52 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
+
+int getNextGap(int gap)
+{
+    gap = (gap * 10) / 13;
+
+    if (gap < 1)
+        return 1;
+    return gap;
+}
+
+void combSort(int a[], int n)
+{
+    // Инициализация зазора
+    int gap = n;
+
+    // Инициализация swapped как true, чтобы убедиться, что
+    // цикл выполняется
+    bool swapped = true;
+
+    while (gap != 1 || swapped == true) {
+        // Найти следующий зазор
+        gap = getNextGap(gap);
+
+        // Инициализация swapped как false, чтобы мы могли
+        // проверить, произошла замена или нет
+        swapped = false;
+
+        // Сравнить все элементы с текущим пробелом
+        for (int i = 0; i < n - gap; i++) {
+            if (a[i] > a[i + gap]) {
+                swap(a[i], a[i + gap]);
+                swapped = true;
+            }
+        }
+    }
+}
 
 int main()
 {
-  const int Nstart = 1000;
-  const int Nend = 10000;
-  const int deltaN = 1000;
-  const int q = 10;
+    int a[] = { 8, 4, 1, 56, 3, -44, 23, -6, 28, 0 };
+    int n = sizeof(a) / sizeof(a[0]);
 
-  for (int N = Nstart; N <= Nend; N += deltaN)
-  {
-    double times[q];
+    combSort(a, n);
 
-    for (int rep = 0; rep < q; ++rep)
-    {
-      int *arr = new int[N];
+    printf("Sorted array: \n");
+    for (int i = 0; i < n; i++)
+        printf("%d ", a[i]);
 
-      for (int i = 0; i < N; ++i)
-      {
-        arr[i] = (i * 37 + rep * 61) % 101;
-      }
-
-      clock_t start = clock();
-
-      int gap = N;
-      bool sorted = false;
-      float shrink = 1.247f;
-
-      while (!sorted)
-      {
-        gap = int(gap / shrink);
-        if (gap <= 1)
-        {
-          gap = 1;
-          sorted = true;
-        }
-
-        for (int i = 0; i + gap < N; ++i)
-        {
-          if (arr[i] > arr[i + gap])
-          {
-            int temp = arr[i];
-            arr[i] = arr[i + gap];
-            arr[i + gap] = temp;
-            sorted = false;
-          }
-        }
-      }
-
-      clock_t end = clock();
-      double duration = 1000.0 * (end - start);
-      times[rep] = duration;
-
-      delete[] arr;
-    }
-
-    for (int i = 0; i < q - 1; ++i)
-    {
-      for (int j = 0; j < q - i - 1; ++j)
-      {
-        if (times[j] > times[j + 1])
-        {
-          double temp = times[j];
-          times[j] = times[j + 1];
-          times[j + 1] = temp;
-        }
-      }
-    }
-
-    int validCount = q * 4 / 5;
-    double sum = 0;
-    for (int i = 0; i < validCount; ++i)
-    {
-      sum += times[i];
-    }
-
-    double avgTime = sum / validCount;
-
-    cout << "Average running time of the algorithm on input data of size " << N << ": " << avgTime << " milliseconds." << endl;
-  }
-
-  return 0;
+    return 0;
 }

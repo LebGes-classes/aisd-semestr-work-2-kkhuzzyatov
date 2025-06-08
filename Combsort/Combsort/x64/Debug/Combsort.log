@@ -1,0 +1,3 @@
+﻿  Combsort.cpp
+C:\Users\79178\Desktop\АИСД\aisd-semestr-work-2-kkhuzzyatov\Combsort\Combsort\Combsort.cpp(32,18): warning C4267: инициализация: преобразование из "size_t" в "int"; возможна потеря данных
+  Combsort.vcxproj -> C:\Users\79178\Desktop\АИСД\aisd-semestr-work-2-kkhuzzyatov\Combsort\x64\Debug\Combsort.exe
